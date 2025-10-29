@@ -4,13 +4,15 @@ import useSWR from "swr"
 import { addItem as apiAdd, deleteItem as apiDelete, getItems, updateItem as apiUpdate } from "@/lib/api/items"
 import type { CreateItemPayload } from "@/lib/api/items"
 import type { Item } from "@/lib/types"
+import { useAuth } from "@/lib/auth/use-auth"
 
 export function useItems() {
+  const { user } = useAuth()
   const { data, error, isLoading, mutate } = useSWR<Item[]>("items", getItems)
 
   const add = async (payload: CreateItemPayload) => {
-    const created = await apiAdd(payload)
-    // optimistic update
+    if (!user) throw new Error("User not authenticated")
+    const created = await apiAdd(payload, user.id, user.email)
     await mutate((prev) => (prev ? [created, ...prev] : [created]), { revalidate: false })
     await mutate()
     return created

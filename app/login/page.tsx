@@ -38,7 +38,7 @@ export default function LoginPage() {
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-balance">Lost & Found Portal</CardTitle>
-          <CardDescription>Admin: admin@school.edu / admin123</CardDescription>
+          <CardDescription>{"Admin: admin@school.edu / admin123 \nStudent: student1@school.edu / stu1@n1\nstudent2@school.edu / stu2@n2\nstudent3@school.edu / stu3@n3"}</CardDescription>
         </CardHeader>
         <CardContent>
           <form className="grid gap-4" onSubmit={onSubmit}>
